@@ -2,6 +2,6 @@ Werkzeug
 Flask
 gunicorn
 numpy
-urllib
+urllib3
 requests
 face_recognition
