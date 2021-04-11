@@ -8,6 +8,9 @@ import requests
 app = flask.Flask(__name__)
 
 
+cached_image_encodings = {}
+
+
 @app.route('/', methods=['POST'])
 def api_id():
     known_image_encodings = []
@@ -28,10 +31,15 @@ def api_id():
     students = response.json()
 
     for student in students['students']:
+
         known_face_ids.append(student['_id'])
-        response = urllib.request.urlopen(student['images'][0])
-        image = face_recognition.load_image_file(response)
-        encoding = face_recognition.face_encodings(image)
+        if(student['_id'] in cached_image_encodings):
+            encoding = cached_image_encodings[student['_id']]
+        else:
+            response = urllib.request.urlopen(student['images'][0])
+            image = face_recognition.load_image_file(response)
+            encoding = face_recognition.face_encodings(image)
+            cached_image_encodings[student['_id']] = encoding
         known_image_encodings.append(encoding[0])
 
     file = request.files['file']
