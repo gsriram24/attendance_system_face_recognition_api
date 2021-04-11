@@ -44,6 +44,7 @@ Takes in a File and class ID and returns the students present in the class after
 **Headers**
 
 Content-Type : form-data
+Authorization : Bearer Token
 
 **Request body**
 
