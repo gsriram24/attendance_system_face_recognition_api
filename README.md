@@ -50,5 +50,5 @@ Authorization : Bearer Token
 
 | Key | Value |
 | ------------- | ------------- |
-| file  | unknown.jpg |
+| files  | "2 files selected" |
 | classId  | 6049da1fc125133d04bdad6b |

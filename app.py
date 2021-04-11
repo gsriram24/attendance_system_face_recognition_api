@@ -42,27 +42,30 @@ def api_id():
             cached_image_encodings[student['_id']] = encoding
         known_image_encodings.append(encoding[0])
 
-    file = request.files['file']
-    unknown_image = face_recognition.load_image_file(file)
-    face_locations = face_recognition.face_locations(
-        unknown_image, model="hog")
-    face_encodings = face_recognition.face_encodings(
-        unknown_image, face_locations)
+    files = request.files.getlist('files')
+    final_face_ids = []
+    for file in files:
+        unknown_image = face_recognition.load_image_file(file)
+        face_locations = face_recognition.face_locations(
+            unknown_image, model="hog")
+        face_encodings = face_recognition.face_encodings(
+            unknown_image, face_locations)
 
-    face_ids = []
+        face_ids = []
 
-    for face_encoding in face_encodings:
-        matches = face_recognition.compare_faces(
-            known_image_encodings, face_encoding)
-        face_distances = face_recognition.face_distance(
-            known_image_encodings, face_encoding)
-        best_match_index = np.argmin(face_distances)
-        if matches[best_match_index]:
-            known_id = known_face_ids[best_match_index]
-            face_ids.append(known_id)
+        for face_encoding in face_encodings:
+            matches = face_recognition.compare_faces(
+                known_image_encodings, face_encoding)
+            face_distances = face_recognition.face_distance(
+                known_image_encodings, face_encoding)
+            best_match_index = np.argmin(face_distances)
+            if matches[best_match_index]:
+                known_id = known_face_ids[best_match_index]
+                face_ids.append(known_id)
+        final_face_ids = list(set(final_face_ids) | set(face_ids))
 
     results = {}
-    results['data'] = face_ids
+    results['data'] = final_face_ids
     return jsonify(results)
 
 
