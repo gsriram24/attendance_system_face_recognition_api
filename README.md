@@ -47,9 +47,7 @@ Content-Type : form-data
 
 **Request body**
 
-```
 | Key | Value |
 | ------------- | ------------- |
 | file  | unknown.jpg |
 | classId  | 6049da1fc125133d04bdad6b |
-```
