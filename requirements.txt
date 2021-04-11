@@ -1,7 +1,7 @@
+Werkzeug
 Flask
 gunicorn
 numpy
-requests
 urllib
+requests
 face_recognition
-Werkzeug
