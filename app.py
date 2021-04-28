@@ -66,6 +66,10 @@ def api_id():
 
     results = {}
     results['data'] = final_face_ids
+    del known_image_encodings
+    del face_encodings
+    del face_locations
+    del unknown_image
     return jsonify(results)
 
 
